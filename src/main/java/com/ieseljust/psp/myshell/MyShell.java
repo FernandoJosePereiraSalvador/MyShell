@@ -17,18 +17,18 @@ public class MyShell {
     public static void main(String[] args) {
         System.out.println("Escribe 'quit' para salir.");
         String input;
-        
+
         do {
             System.out.print("# MyShell> "); // Verde
             input = readInput();
-            
+
             if (!input.equalsIgnoreCase("quit")) {
                 executeCommand(input);
             }
-            
+
             System.out.print("\u001B[0m"); // Restaurar color original (gris)
         } while (!input.equalsIgnoreCase("quit"));
-        
+
         System.out.println("MyShell se ha cerrado.");
     }
 
@@ -44,10 +44,18 @@ public class MyShell {
 
     private static void executeCommand(String command) {
         try {
-            // Divide el comando y sus argumentos en una lista de strings
-            String[] commandParts = command.split("\\s+");
+            String osName = System.getProperty("os.name").toLowerCase();
+            String finalCommand;
 
-            ProcessBuilder processBuilder = new ProcessBuilder(commandParts);
+            if (osName.contains("win")) {
+                // En Windows, usa cmd /c antes del comando
+                finalCommand = "cmd /c " + command;
+            } else {
+                // En otros sistemas, usa el comando directamente
+                finalCommand = command;
+            }
+
+            ProcessBuilder processBuilder = new ProcessBuilder(finalCommand.split("\\s+"));
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
 

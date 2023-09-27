@@ -71,7 +71,7 @@ public class MyShell {
                 System.out.println("\u001B[31m" + line); // Rojo
             }
 
-            System.out.println("\u001B[0mCódigo de salida: " + exitCode); // Restaurar color original (gris)
+            System.out.println("\u001B[0m Código de salida: " + exitCode); // Restaurar color original (gris)
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
